@@ -1,22 +1,24 @@
 <template>
-  <div class="hello">
+  <div :class="'hello'+count" :count="count" :[name]="123">
     <input v-bind:value="count" /> <button @click="add">+</button>
   </div>
 </template>
 
 <script>
-import {ref} from 'vue';
+import {ref, watchEffect} from 'vue';
+
 export default {
   name: 'HelloWorld',
-  props: {
-    initNumber: Number,
-  },
-  setup(props) {
-    const count = ref(props.initNumber || 0)
+  setup() {
+    const count = ref(0)
     const add = ()=> {count.value +=1}
+    watchEffect(() => {
+      console.log(count.value);
+    })
     return {
       count,
-      add
+      add,
+      name: 'name'+count.value
     }
   }
 }
